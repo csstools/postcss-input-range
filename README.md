@@ -2,7 +2,7 @@
 
 <img align="right" width="135" height="95" src="http://postcss.github.io/postcss/logo-leftp.png" title="Philosopher’s stone, logo of PostCSS">
 
-[Input Range] is a [PostCSS] plugin that allows you to style `input["range"]` with unprefixed pseudo-elements.
+[Input Range] allows you to style input ranges with unprefixed selectors.
 
 ```css
 /* before */
@@ -50,19 +50,25 @@
 }
 ```
 
-## Supported pseudo elements
+## Supported selectors
 
-**`::range-track`** styles the track of a range.
+#### `::range-track`
 
-**`::range-thumb`** styles the thumb of a range.
+Styles the track of a range.
 
-**`::range-lower`** styles the lower track of a range. *Only supported in Edge and IE 10+.*
+#### `::range-thumb`
 
-**`::range-upper`** styles the upper track of a range. *Only supported in Edge and IE 10+.*
+Styles the thumb of a range.
+
+#### `::range-lower`
+
+Styles the lower track of a range before the thumb. <small>*Only supported in Edge and IE 10+.*</small>
+
+#### `::range-upper`
+
+Styles the upper track of a range after the thumb. <small>*Only supported in Edge and IE 10+.*</small>
 
 ## Usage
-
-Follow these steps to use [Input Range].
 
 Add [Input Range] to your build tool:
 
@@ -141,6 +147,113 @@ grunt.initConfig({
         }
     }
 });
+```
+
+## Options
+
+#### `method`
+
+Type: `String`
+Default: `'replace'`
+
+##### `clone`
+Copies any rules with `::range` pseudo-elements to new rules using prefixes.
+```css
+/* before */
+
+::range-thumb {
+	border-radius: 3px;
+}
+
+/* after */
+
+::-moz-range-thumb {
+	border-radius: 3px;
+}
+
+::-ms-thumb {
+	border-radius: 3px;
+}
+
+::-webkit-slider-thumb {
+	border-radius: 3px;
+}
+
+::range-thumb {
+	border-radius: 3px;
+}
+```
+
+##### `replace`
+Copies any rules with `::range` pseudo-elements to new rules using prefixes while removing the original.
+```css
+/* before */
+
+::range-thumb {
+	border-radius: 3px;
+}
+
+/* after */
+
+::-moz-range-thumb {
+	border-radius: 3px;
+}
+
+::-ms-thumb {
+	border-radius: 3px;
+}
+
+::-webkit-slider-thumb {
+	border-radius: 3px;
+}
+```
+
+##### `warn`
+Warns whenever a `::range` pseudo-class is found.
+
+#### `strict`
+
+Type: `Boolean`
+Default: `true`
+
+##### `true`
+Ignores prefixed `::range`-type pseudo-classes.
+```css
+/* before */
+
+::-ms-thumb {
+	border-radius: 3px;
+}
+
+/* after */
+
+::-ms-thumb {
+	border-radius: 3px;
+}
+```
+
+##### `false`
+Processes prefixed `::range`-type pseudo-classes.
+```css
+/* before */
+
+::-ms-thumb {
+	border-radius: 3px;
+}
+
+/* after */
+
+::-moz-range-thumb {
+	border-radius: 3px;
+}
+
+::-ms-thumb {
+	border-radius: 3px;
+}
+
+::-webkit-slider-thumb {
+	border-radius: 3px;
+}
 ```
 
 [ci]: https://travis-ci.org/jonathantneal/postcss-input-range
