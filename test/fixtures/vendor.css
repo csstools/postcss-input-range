@@ -7,3 +7,7 @@
 	border-radius: 3px;
 	cursor: pointer;
 }
+
+::-moz-range-progress {
+	background: #78a300;
+}

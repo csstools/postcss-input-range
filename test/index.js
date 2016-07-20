@@ -14,7 +14,7 @@ var tests = {
 		'basic:warn': {
 			message: 'supports "warn" method',
 			options: { method: 'warn' },
-			warning: 2
+			warning: 3
 		},
 		'vendor': {
 			message: 'ignores vendor prefixes if strict'

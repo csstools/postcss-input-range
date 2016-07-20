@@ -62,7 +62,7 @@ Styles the thumb of a range.
 
 #### `::range-lower`
 
-Styles the lower track of a range before the thumb. <small>*Only supported in Edge and IE 10+.*</small>
+Styles the lower track of a range before the thumb. <small>*Only supported in Firefox, Edge and IE 10+.*</small>
 
 #### `::range-upper`
 

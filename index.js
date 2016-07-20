@@ -3,12 +3,12 @@ var postcss = require('postcss');
 var prefixi = {
 	'::range-track': ['::-moz-range-track', '::-ms-track', '::-webkit-slider-runnable-track'],
 	'::range-thumb': ['::-moz-range-thumb', '::-ms-thumb', '::-webkit-slider-thumb'],
-	'::range-lower': ['::-ms-fill-lower'],
+	'::range-lower': ['::-moz-range-progress', '::-ms-fill-lower'],
 	'::range-upper': ['::-ms-fill-upper']
 };
 
 var matcherStrict = /::(range-track|range-thumb|range-upper)/i;
-var matcherLoose  = /::(range-track|range-thumb|range-upper|-moz-range-track|-ms-track|-webkit-slider-runnable-track|-moz-range-thumb|-ms-thumb|-webkit-slider-thumb|-ms-fill-lower|-ms-fill-upper)/i;
+var matcherLoose  = /::(range-track|range-thumb|range-upper|-moz-range-track|-ms-track|-webkit-slider-runnable-track|-moz-range-thumb|-ms-thumb|-webkit-slider-thumb|-moz-range-progress|-ms-fill-lower|-ms-fill-upper)/i;
 
 module.exports = postcss.plugin('postcss-input-range', function (opts) {
 	var method = opts && /^(clone|warn)$/i.test(opts.method || '') ? opts.method.toLowerCase() : 'replace';

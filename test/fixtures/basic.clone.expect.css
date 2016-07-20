@@ -37,3 +37,15 @@
 	border-radius: 3px;
 	cursor: pointer;
 }
+
+::-moz-range-progress {
+	background: #78a300;
+}
+
+::-ms-fill-lower {
+	background: #78a300;
+}
+
+::range-lower {
+	background: #78a300;
+}

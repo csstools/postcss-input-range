@@ -7,3 +7,7 @@
 	border-radius: 3px;
 	cursor: pointer;
 }
+
+::range-lower {
+	background: #78a300;
+}
