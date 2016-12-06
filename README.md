@@ -1,8 +1,12 @@
-# Input Range [![Build Status][ci-img]][ci]
+# Input Range <a href="https://github.com/postcss/postcss"><img src="https://postcss.github.io/postcss/logo.svg" alt="PostCSS Logo" width="90" height="90" align="right"></a>
 
-<img align="right" width="135" height="95" src="http://postcss.github.io/postcss/logo-leftp.png" title="Philosopher’s stone, logo of PostCSS">
+[![NPM Version][npm-img]][npm-url]
+[![Build Status][cli-img]][cli-url]
+[![Licensing][lic-image]][lic-url]
+[![Changelog][log-image]][log-url]
+[![Gitter Chat][git-image]][git-url]
 
-[Input Range] allows you to style input ranges with unprefixed selectors.
+[Input Range] lets you style input ranges with unprefixed selectors.
 
 ```css
 /* before */
@@ -68,87 +72,6 @@ Styles the lower track of a range before the thumb. <small>*Only supported in Fi
 
 Styles the upper track of a range after the thumb. <small>*Only supported in Edge and IE 10+.*</small>
 
-## Usage
-
-Add [Input Range] to your build tool:
-
-```bash
-npm install postcss-input-range --save-dev
-```
-
-#### Node
-
-```js
-require('postcss-input-range')({ /* options */ }).process(YOUR_CSS);
-```
-
-#### PostCSS
-
-Add [PostCSS] to your build tool:
-
-```bash
-npm install postcss --save-dev
-```
-
-Load [Input Range] as a PostCSS plugin:
-
-```js
-postcss([
-    require('postcss-input-range')({ /* options */ })
-]);
-```
-
-#### Gulp
-
-Add [Gulp PostCSS] to your build tool:
-
-```bash
-npm install gulp-postcss --save-dev
-```
-
-Enable [Input Range] within your Gulpfile:
-
-```js
-var postcss = require('gulp-postcss');
-
-gulp.task('css', function () {
-    return gulp.src('./css/src/*.css').pipe(
-        postcss([
-            require('postcss-input-range')({ /* options */ })
-        ])
-    ).pipe(
-        gulp.dest('./css')
-    );
-});
-```
-
-#### Grunt
-
-Add [Grunt PostCSS] to your build tool:
-
-```bash
-npm install grunt-postcss --save-dev
-```
-
-Enable [Input Range] within your Gruntfile:
-
-```js
-grunt.loadNpmTasks('grunt-postcss');
-
-grunt.initConfig({
-    postcss: {
-        options: {
-            processors: [
-                require('postcss-input-range')({ /* options */ })
-            ]
-        },
-        dist: {
-            src: 'css/*.css'
-        }
-    }
-});
-```
-
 ## Options
 
 #### `method`
@@ -157,7 +80,9 @@ Type: `String`
 Default: `'replace'`
 
 ##### `clone`
+
 Copies any rules with `::range` pseudo-elements to new rules using prefixes.
+
 ```css
 /* before */
 
@@ -185,7 +110,9 @@ Copies any rules with `::range` pseudo-elements to new rules using prefixes.
 ```
 
 ##### `replace`
+
 Copies any rules with `::range` pseudo-elements to new rules using prefixes while removing the original.
+
 ```css
 /* before */
 
@@ -209,6 +136,7 @@ Copies any rules with `::range` pseudo-elements to new rules using prefixes whil
 ```
 
 ##### `warn`
+
 Warns whenever a `::range` pseudo-class is found.
 
 #### `strict`
@@ -217,7 +145,9 @@ Type: `Boolean`
 Default: `true`
 
 ##### `true`
+
 Ignores prefixed `::range`-type pseudo-classes.
+
 ```css
 /* before */
 
@@ -233,7 +163,9 @@ Ignores prefixed `::range`-type pseudo-classes.
 ```
 
 ##### `false`
+
 Processes prefixed `::range`-type pseudo-classes.
+
 ```css
 /* before */
 
@@ -256,9 +188,99 @@ Processes prefixed `::range`-type pseudo-classes.
 }
 ```
 
-[ci]: https://travis-ci.org/jonathantneal/postcss-input-range
-[ci-img]: https://travis-ci.org/jonathantneal/postcss-input-range.svg
+## Usage
+
+Add [Input Range] to your build tool:
+
+```bash
+npm install jonathantneal/postcss-input-range --save-dev
+```
+
+#### Node
+
+```js
+require('postcss-input-range').process(YOUR_CSS, { /* options */ });
+```
+
+#### PostCSS
+
+Add [PostCSS] to your build tool:
+
+```bash
+npm install postcss --save-dev
+```
+
+Load [Input Range] as a PostCSS plugin:
+
+```js
+postcss([
+	require('postcss-input-range')({ /* options */ })
+]).process(YOUR_CSS, /* options */);
+```
+
+#### Gulp
+
+Add [Gulp PostCSS] to your build tool:
+
+```bash
+npm install gulp-postcss --save-dev
+```
+
+Enable [Input Range] within your Gulpfile:
+
+```js
+var postcss = require('gulp-postcss');
+
+gulp.task('css', function () {
+	return gulp.src('./src/*.css').pipe(
+		postcss([
+			require('postcss-input-range')({ /* options */ })
+		])
+	).pipe(
+		gulp.dest('.')
+	);
+});
+```
+
+#### Grunt
+
+Add [Grunt PostCSS] to your build tool:
+
+```bash
+npm install grunt-postcss --save-dev
+```
+
+Enable [Input Range] within your Gruntfile:
+
+```js
+grunt.loadNpmTasks('grunt-postcss');
+
+grunt.initConfig({
+	postcss: {
+		options: {
+			use: [
+				require('postcss-input-range')({ /* options */ })
+			]
+		},
+		dist: {
+			src: '*.css'
+		}
+	}
+});
+```
+
+[npm-url]: https://www.npmjs.com/package/postcss-input-range
+[npm-img]: https://img.shields.io/npm/v/postcss-input-range.svg
+[cli-url]: https://travis-ci.org/jonathantneal/postcss-input-range
+[cli-img]: https://img.shields.io/travis/jonathantneal/postcss-input-range.svg
+[lic-url]: LICENSE.md
+[lic-image]: https://img.shields.io/npm/l/postcss-input-range.svg
+[log-url]: CHANGELOG.md
+[log-image]: https://img.shields.io/badge/changelog-md-blue.svg
+[git-url]: https://gitter.im/postcss/postcss
+[git-image]: https://img.shields.io/badge/chat-gitter-blue.svg
+
+[Input Range]: https://github.com/jonathantneal/postcss-input-range
+[PostCSS]: https://github.com/postcss/postcss
 [Gulp PostCSS]: https://github.com/postcss/gulp-postcss
 [Grunt PostCSS]: https://github.com/nDmitry/grunt-postcss
-[PostCSS]: https://github.com/postcss/postcss
-[Input Range]: https://github.com/jonathantneal/postcss-input-range
