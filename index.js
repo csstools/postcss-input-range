@@ -10,51 +10,62 @@ const prefixi = {
 	'::range-upper': ['::-ms-fill-upper']
 };
 
-// matching expressions for pseudos
-const matcherStrict = /::(range-track|range-thumb|range-upper)/i;
-const matcherLoose  = /::(range-track|range-thumb|range-upper|-moz-range-track|-ms-track|-webkit-slider-runnable-track|-moz-range-thumb|-ms-thumb|-webkit-slider-thumb|-moz-range-progress|-ms-fill-lower|-ms-fill-upper)/i;
+// pseudo-class matchers
+const matcherStrict = /::(range-track|range-thumb|range-lower|range-upper)/i;
+const matcherLoose  = /::(range-track|range-thumb|range-lower|range-upper|-moz-range-track|-ms-track|-webkit-slider-runnable-track|-moz-range-thumb|-ms-thumb|-webkit-slider-thumb|-moz-range-progress|-ms-fill-lower|-ms-fill-upper)/i;
 
 // plugin
-module.exports = postcss.plugin('postcss-input-range', (opts = {}) => {
-	const method = (/^(clone|warn)$/i).test(opts.method || '') ? opts.method.toLowerCase() : 'replace';
-	const strict = 'strict' in opts ? opts.strict : true;
-	const match  = strict ? matcherStrict : matcherLoose;
+module.exports = postcss.plugin('postcss-input-range', ({
+	method = 'replace',
+	strict = true
+} = {}) => {
+	// sanitized method
+	const safeMethod = (/^(clone|warn)$/i).test(method) ? method.toLowerCase() : 'replace';
+
+	// pseudo-class matcher
+	const selectorMatch = strict ? matcherStrict : matcherLoose;
 
 	return (css, result) => {
-		css.walkRules((rule) => {
-			if (match.test(rule.selector) !== -1) {
-				let cloned;
+		// walk each matching rule
+		css.walkRules(selectorMatch, (rule) => {
+			let cloned;
 
-				parser((selectors) => {
-					selectors.walk((selector) => {
-						selector.walkPseudos((pseudo) => {
-							Object.keys(prefixi).forEach((name) => {
-								const prefixes = strict ? [name] : prefixi[name].concat(name);
+			parser((selectors) => {
+				selectors.walk((selector) => {
+					selector.walkPseudos((pseudo) => {
+						Object.keys(prefixi).forEach((name) => {
+							const prefixes = strict ? [name] : prefixi[name].concat(name);
 
-								if (prefixes.indexOf(pseudo.value) !== -1) {
-									if (method === 'warn') {
-										result.warn(pseudo.value + ' detected', {
-											node: rule
+							if (prefixes.indexOf(pseudo.value) !== -1) {
+								if (safeMethod === 'warn') {
+									result.warn(`${ pseudo.value } detected`, {
+										node: rule
+									});
+								} else {
+									prefixi[name].forEach((prefix) => {
+										pseudo.value = prefix;
+
+										cloned = rule.cloneBefore({
+											selector: selector.toString()
 										});
-									} else {
-										prefixi[name].forEach((prefix) => {
-											pseudo.value = prefix;
-
-											cloned = rule.cloneBefore({
-												selector: selector.toString()
-											});
-										});
-									}
+									});
 								}
-							});
+							}
 						});
 					});
-				}).process(rule.selector);
+				});
+			}).process(rule.selector);
 
-				if (cloned && method === 'replace') {
-					rule.remove();
-				}
+			if (cloned && safeMethod === 'replace') {
+				rule.remove();
 			}
 		});
 	};
 });
+
+// override plugin#process
+module.exports.process = function (cssString, pluginOptions, processOptions) {
+	return postcss([
+		0 in arguments ? module.exports(pluginOptions) : module.exports()
+	]).process(cssString, processOptions);
+};
