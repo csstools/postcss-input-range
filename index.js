@@ -31,7 +31,7 @@ module.exports = postcss.plugin('postcss-input-range', ({
 			let cloned;
 
 			parser((selectors) => {
-				selectors.walk((selector) => {
+				selectors.each((selector) => {
 					selector.walkPseudos((pseudo) => {
 						Object.keys(prefixi).forEach((name) => {
 							const prefixes = strict ? [name] : prefixi[name].concat(name);
