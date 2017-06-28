@@ -1,10 +1,9 @@
-# Input Range <a href="https://github.com/postcss/postcss"><img src="https://postcss.github.io/postcss/logo.svg" alt="PostCSS Logo" width="90" height="90" align="right"></a>
+# Input Range [<img src="https://postcss.github.io/postcss/logo.svg" alt="PostCSS Logo" width="90" height="90" align="right">][postcss]
 
 [![NPM Version][npm-img]][npm-url]
-[![Build Status][cli-img]][cli-url]
-[![Licensing][lic-image]][lic-url]
-[![Changelog][log-image]][log-url]
-[![Gitter Chat][git-image]][git-url]
+[![Linux Build Status][cli-img]][cli-url]
+[![Windows Build Status][win-img]][win-url]
+[![Gitter Chat][git-img]][git-url]
 
 [Input Range] lets you style input ranges with unprefixed selectors.
 
@@ -12,45 +11,45 @@
 /* before */
 
 ::range-track {
-	background: #3071a9;
-	width: 100%;
+  background: #3071a9;
+  width: 100%;
 }
 
 ::range-thumb {
-	border-radius: 3px;
-	cursor: pointer;
+  border-radius: 3px;
+  cursor: pointer;
 }
 
 /* after */
 
 ::-moz-range-track {
-	background: #3071a9;
-	width: 100%;
+  background: #3071a9;
+  width: 100%;
 }
 
 ::-ms-track {
-	background: #3071a9;
-	width: 100%;
+  background: #3071a9;
+  width: 100%;
 }
 
 ::-webkit-slider-runnable-track {
-	background: #3071a9;
-	width: 100%;
+  background: #3071a9;
+  width: 100%;
 }
 
 ::-moz-range-thumb {
-	border-radius: 3px;
-	cursor: pointer;
+  border-radius: 3px;
+  cursor: pointer;
 }
 
 ::-ms-thumb {
-	border-radius: 3px;
-	cursor: pointer;
+  border-radius: 3px;
+  cursor: pointer;
 }
 
 ::-webkit-slider-thumb {
-	border-radius: 3px;
-	cursor: pointer;
+  border-radius: 3px;
+  cursor: pointer;
 }
 ```
 
@@ -66,17 +65,19 @@ Styles the thumb of a range.
 
 #### `::range-lower`
 
-Styles the lower track of a range before the thumb. <small>*Only supported in Firefox, Edge and IE 10+.*</small>
+Styles the lower track of a range before the thumb. <small>*Only supported in
+Firefox, Edge and IE 10+.*</small>
 
 #### `::range-upper`
 
-Styles the upper track of a range after the thumb. <small>*Only supported in Edge and IE 10+.*</small>
+Styles the upper track of a range after the thumb. <small>*Only supported in
+Edge and IE 10+.*</small>
 
 ## Options
 
-#### `method`
+### `method`
 
-Type: `String`
+Type: `String`  
 Default: `'replace'`
 
 ##### `clone`
@@ -87,25 +88,25 @@ Copies any rules with `::range` pseudo-elements to new rules using prefixes.
 /* before */
 
 ::range-thumb {
-	border-radius: 3px;
+  border-radius: 3px;
 }
 
 /* after */
 
 ::-moz-range-thumb {
-	border-radius: 3px;
+  border-radius: 3px;
 }
 
 ::-ms-thumb {
-	border-radius: 3px;
+  border-radius: 3px;
 }
 
 ::-webkit-slider-thumb {
-	border-radius: 3px;
+  border-radius: 3px;
 }
 
 ::range-thumb {
-	border-radius: 3px;
+  border-radius: 3px;
 }
 ```
 
@@ -117,21 +118,21 @@ Copies any rules with `::range` pseudo-elements to new rules using prefixes whil
 /* before */
 
 ::range-thumb {
-	border-radius: 3px;
+  border-radius: 3px;
 }
 
 /* after */
 
 ::-moz-range-thumb {
-	border-radius: 3px;
+  border-radius: 3px;
 }
 
 ::-ms-thumb {
-	border-radius: 3px;
+  border-radius: 3px;
 }
 
 ::-webkit-slider-thumb {
-	border-radius: 3px;
+  border-radius: 3px;
 }
 ```
 
@@ -139,7 +140,7 @@ Copies any rules with `::range` pseudo-elements to new rules using prefixes whil
 
 Warns whenever a `::range` pseudo-class is found.
 
-#### `strict`
+### `strict`
 
 Type: `Boolean`
 Default: `true`
@@ -152,13 +153,13 @@ Ignores prefixed `::range`-type pseudo-classes.
 /* before */
 
 ::-ms-thumb {
-	border-radius: 3px;
+  border-radius: 3px;
 }
 
 /* after */
 
 ::-ms-thumb {
-	border-radius: 3px;
+  border-radius: 3px;
 }
 ```
 
@@ -170,21 +171,21 @@ Processes prefixed `::range`-type pseudo-classes.
 /* before */
 
 ::-ms-thumb {
-	border-radius: 3px;
+  border-radius: 3px;
 }
 
 /* after */
 
 ::-moz-range-thumb {
-	border-radius: 3px;
+  border-radius: 3px;
 }
 
 ::-ms-thumb {
-	border-radius: 3px;
+  border-radius: 3px;
 }
 
 ::-webkit-slider-thumb {
-	border-radius: 3px;
+  border-radius: 3px;
 }
 ```
 
@@ -193,13 +194,15 @@ Processes prefixed `::range`-type pseudo-classes.
 Add [Input Range] to your build tool:
 
 ```bash
-npm install jonathantneal/postcss-input-range --save-dev
+npm install postcss-input-range --save-dev
 ```
 
 #### Node
 
+Use [Input Range] to process your CSS:
+
 ```js
-require('postcss-input-range').process(YOUR_CSS, { /* options */ });
+require('postcss-input-range').process(YOUR_CSS);
 ```
 
 #### PostCSS
@@ -210,12 +213,12 @@ Add [PostCSS] to your build tool:
 npm install postcss --save-dev
 ```
 
-Load [Input Range] as a PostCSS plugin:
+Use [Input Range] as a plugin:
 
 ```js
 postcss([
-	require('postcss-input-range')({ /* options */ })
-]).process(YOUR_CSS, /* options */);
+  require('postcss-input-range')()
+]).process(YOUR_CSS);
 ```
 
 #### Gulp
@@ -226,19 +229,19 @@ Add [Gulp PostCSS] to your build tool:
 npm install gulp-postcss --save-dev
 ```
 
-Enable [Input Range] within your Gulpfile:
+Use [Input Range] in your Gulpfile:
 
 ```js
 var postcss = require('gulp-postcss');
 
 gulp.task('css', function () {
-	return gulp.src('./src/*.css').pipe(
-		postcss([
-			require('postcss-input-range')({ /* options */ })
-		])
-	).pipe(
-		gulp.dest('.')
-	);
+  return gulp.src('./src/*.css').pipe(
+    postcss([
+      require('postcss-input-range')()
+    ])
+  ).pipe(
+    gulp.dest('.')
+  );
 });
 ```
 
@@ -250,22 +253,22 @@ Add [Grunt PostCSS] to your build tool:
 npm install grunt-postcss --save-dev
 ```
 
-Enable [Input Range] within your Gruntfile:
+Use [Input Range] in your Gruntfile:
 
 ```js
 grunt.loadNpmTasks('grunt-postcss');
 
 grunt.initConfig({
-	postcss: {
-		options: {
-			use: [
-				require('postcss-input-range')({ /* options */ })
-			]
-		},
-		dist: {
-			src: '*.css'
-		}
-	}
+  postcss: {
+    options: {
+      use: [
+        require('postcss-input-range')()
+      ]
+    },
+    dist: {
+      src: '*.css'
+    }
+  }
 });
 ```
 
@@ -273,12 +276,10 @@ grunt.initConfig({
 [npm-img]: https://img.shields.io/npm/v/postcss-input-range.svg
 [cli-url]: https://travis-ci.org/jonathantneal/postcss-input-range
 [cli-img]: https://img.shields.io/travis/jonathantneal/postcss-input-range.svg
-[lic-url]: LICENSE.md
-[lic-image]: https://img.shields.io/npm/l/postcss-input-range.svg
-[log-url]: CHANGELOG.md
-[log-image]: https://img.shields.io/badge/changelog-md-blue.svg
+[win-url]: https://ci.appveyor.com/project/jonathantneal/postcss-input-range
+[win-img]: https://img.shields.io/appveyor/ci/jonathantneal/postcss-input-range.svg
 [git-url]: https://gitter.im/postcss/postcss
-[git-image]: https://img.shields.io/badge/chat-gitter-blue.svg
+[git-img]: https://img.shields.io/badge/chat-gitter-blue.svg
 
 [Input Range]: https://github.com/jonathantneal/postcss-input-range
 [PostCSS]: https://github.com/postcss/postcss
