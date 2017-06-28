@@ -1,3 +1,9 @@
 node_modules
-npm-debug.log
+.*
+!.appveyor.yml
+!.gitignore
+!.tape.js
+!.travis.yml
+*.log*
+*.result.css
 test/*.result.css
