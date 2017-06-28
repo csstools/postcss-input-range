@@ -1,5 +1,12 @@
 # Changes to Input Range
 
+### 4.0.0 (June 28, 2017)
+
+- Added: PostCSS 6 compatibility
+- Added: Node 4+ compatibility
+- Updated: Fix for selector walking
+- Updated: Development dependencies
+
 ### 3.0.1 (December 8, 2016)
 
 - Updated: Use destructing assignment on plugin options

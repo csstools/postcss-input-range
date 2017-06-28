@@ -1,6 +1,6 @@
 {
   "name": "postcss-input-range",
-  "version": "3.0.1",
+  "version": "4.0.0",
   "description": "Style range inputs with unprefixed pseudo-classes",
   "author": "Jonathan Neal <jonathantneal@hotmail.com>",
   "license": "CC0-1.0",
