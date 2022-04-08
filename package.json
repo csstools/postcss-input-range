@@ -12,7 +12,7 @@
     "index.js"
   ],
   "scripts": {
-    "lint": "echint && eslint index.js && jscs index.js",
+    "lint": "echint && eslint index.js",
     "prepublish": "npm test",
     "tape": "postcss-tape",
     "test": "npm run lint && postcss-tape"
@@ -29,8 +29,6 @@
     "echint-config-dev": "1.0.0",
     "eslint": "^4.1.1",
     "eslint-config-dev": "2.0.0",
-    "jscs": "^3.0.7",
-    "jscs-config-dev": "1.0.1",
     "postcss-tape": "2.0.1"
   },
   "echint": {
@@ -41,9 +39,6 @@
     "parserOptions": {
       "sourceType": "module"
     }
-  },
-  "jscsConfig": {
-    "preset": "dev"
   },
   "keywords": [
     "postcss",
