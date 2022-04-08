@@ -21,7 +21,7 @@
     "node": ">=4.0.0"
   },
   "dependencies": {
-    "postcss": "^6.0.3",
+    "postcss": "^6.0.3 || ^7.0.0 || ^8.0.0",
     "postcss-selector-parser": "^2.2.3"
   },
   "devDependencies": {
