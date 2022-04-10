@@ -15,6 +15,9 @@ const prefixi = {
 const matcherStrict = /::(range-track|range-thumb|range-lower|range-upper)/i;
 const matcherLoose  = /::(range-track|range-thumb|range-lower|range-upper|-moz-range-track|-ms-track|-webkit-slider-runnable-track|-moz-range-thumb|-ms-thumb|-webkit-slider-thumb|-moz-range-progress|-ms-fill-lower|-ms-fill-upper)/i;
 
+// mark created rules
+const newMarker = Symbol();
+
 // plugin
 module.exports = (opts = {}) => {
 	// options
@@ -29,41 +32,46 @@ module.exports = (opts = {}) => {
 
 	return {
 		postcssPlugin: 'postcss-input-range',
-		Once (css, { result }) {
+		Rule (rule, { result }) {
+			let cloned;
+
 			// walk each matching rule
-			css.walkRules(selectorMatch, (rule) => {
-				let cloned;
+			if (!selectorMatch.test(rule.selector) || rule[newMarker]) {
+				return;
+			}
 
-				parser((selectors) => {
-					selectors.each((selector) => {
-						selector.walkPseudos((pseudo) => {
-							Object.keys(prefixi).forEach((name) => {
-								const prefixes = strict ? [name] : prefixi[name].concat(name);
+			parser((selectors) => {
+				selectors.each((selector) => {
+					selector.walkPseudos((pseudo) => {
+						Object.keys(prefixi).forEach((name) => {
+							if (pseudo.value !== name && (strict || prefixi[name].indexOf(pseudo.value) === -1)) {
+								return;
+							}
 
-								if (prefixes.indexOf(pseudo.value) !== -1) {
-									if (safeMethod === 'warn') {
-										result.warn(`${ pseudo.value } detected`, {
-											node: rule
-										});
-									} else {
-										prefixi[name].forEach((prefix) => {
-											pseudo.value = prefix;
+							if (safeMethod === 'warn') {
+								result.warn(`${ pseudo.value } detected`, {
+									node: rule
+								});
+								return;
+							}
 
-											cloned = rule.cloneBefore({
-												selector: selector.toString()
-											});
-										});
-									}
-								}
+							prefixi[name].forEach((prefix) => {
+								pseudo.value = prefix;
+
+								cloned = rule.cloneBefore({
+									selector: selector.toString()
+								});
+								cloned[newMarker] = true;
 							});
+
 						});
 					});
-				}).process(rule.selector);
+				});
+			}).process(rule.selector);
 
-				if (cloned && safeMethod === 'replace') {
-					rule.remove();
-				}
-			});
+			if (cloned && safeMethod === 'replace') {
+				rule.remove();
+			}
 		},
 	};
 };
