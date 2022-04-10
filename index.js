@@ -2,7 +2,6 @@
 
 // tooling
 const parser  = require('postcss-selector-parser');
-const postcss = require('postcss');
 
 // pseudo map
 const prefixi = {
@@ -17,7 +16,7 @@ const matcherStrict = /::(range-track|range-thumb|range-lower|range-upper)/i;
 const matcherLoose  = /::(range-track|range-thumb|range-lower|range-upper|-moz-range-track|-ms-track|-webkit-slider-runnable-track|-moz-range-thumb|-ms-thumb|-webkit-slider-thumb|-moz-range-progress|-ms-fill-lower|-ms-fill-upper)/i;
 
 // plugin
-module.exports = postcss.plugin('postcss-input-range', (opts) => {
+module.exports = (opts = {}) => {
 	// options
 	const method = opts && 'method' in opts ? opts.method : 'replace';
 	const strict = opts && 'strict' in opts ? Boolean(opts.strict) : true;
@@ -28,40 +27,45 @@ module.exports = postcss.plugin('postcss-input-range', (opts) => {
 	// pseudo-class matcher
 	const selectorMatch = strict ? matcherStrict : matcherLoose;
 
-	return (css, result) => {
-		// walk each matching rule
-		css.walkRules(selectorMatch, (rule) => {
-			let cloned;
+	return {
+		postcssPlugin: 'postcss-input-range',
+		Once (css, { result }) {
+			// walk each matching rule
+			css.walkRules(selectorMatch, (rule) => {
+				let cloned;
 
-			parser((selectors) => {
-				selectors.each((selector) => {
-					selector.walkPseudos((pseudo) => {
-						Object.keys(prefixi).forEach((name) => {
-							const prefixes = strict ? [name] : prefixi[name].concat(name);
+				parser((selectors) => {
+					selectors.each((selector) => {
+						selector.walkPseudos((pseudo) => {
+							Object.keys(prefixi).forEach((name) => {
+								const prefixes = strict ? [name] : prefixi[name].concat(name);
 
-							if (prefixes.indexOf(pseudo.value) !== -1) {
-								if (safeMethod === 'warn') {
-									result.warn(`${ pseudo.value } detected`, {
-										node: rule
-									});
-								} else {
-									prefixi[name].forEach((prefix) => {
-										pseudo.value = prefix;
-
-										cloned = rule.cloneBefore({
-											selector: selector.toString()
+								if (prefixes.indexOf(pseudo.value) !== -1) {
+									if (safeMethod === 'warn') {
+										result.warn(`${ pseudo.value } detected`, {
+											node: rule
 										});
-									});
+									} else {
+										prefixi[name].forEach((prefix) => {
+											pseudo.value = prefix;
+
+											cloned = rule.cloneBefore({
+												selector: selector.toString()
+											});
+										});
+									}
 								}
-							}
+							});
 						});
 					});
-				});
-			}).process(rule.selector);
+				}).process(rule.selector);
 
-			if (cloned && safeMethod === 'replace') {
-				rule.remove();
-			}
-		});
+				if (cloned && safeMethod === 'replace') {
+					rule.remove();
+				}
+			});
+		},
 	};
-});
+};
+
+module.exports.postcss = true;
