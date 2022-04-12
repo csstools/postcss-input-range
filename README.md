@@ -194,7 +194,7 @@ Processes prefixed `::range`-type pseudo-classes.
 Add [Input Range] to your build tool:
 
 ```bash
-npm install postcss-input-range --save-dev
+npm install postcss postcss-input-range --save-dev
 ```
 
 #### Node
