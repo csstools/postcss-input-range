@@ -1,7 +1,5 @@
-'use strict';
-
 // tooling
-const parser  = require('postcss-selector-parser');
+import parser from 'postcss-selector-parser';
 
 // pseudo map
 const prefixi = {
@@ -18,8 +16,7 @@ const matcherLoose  = /::(range-track|range-thumb|range-lower|range-upper|-moz-r
 // mark created rules
 const newMarker = Symbol();
 
-// plugin
-module.exports = (opts = {}) => {
+const postcssInputRange = (opts = {}) => {
 	// options
 	const method = opts && 'method' in opts ? opts.method : 'replace';
 	const strict = opts && 'strict' in opts ? Boolean(opts.strict) : true;
@@ -76,4 +73,6 @@ module.exports = (opts = {}) => {
 	};
 };
 
-module.exports.postcss = true;
+postcssInputRange.postcss = true;
+
+export default postcssInputRange;
