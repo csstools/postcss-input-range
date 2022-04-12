@@ -1,5 +1,11 @@
 # Changes to Input Range
 
+### 5.0.0 (April 12, 2022)
+
+- Added: PostCSS 8 compatibility (breaking)
+- Added: Exports CJS and ESM formats.
+- Updated: Engines now match `postcss` so only 12, 14, and 16.
+
 ### 4.0.0 (June 28, 2017)
 
 - Added: PostCSS 6 compatibility
