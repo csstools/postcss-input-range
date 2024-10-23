@@ -1,5 +1,10 @@
 # Changes to Input Range
 
+### 6.0.0 (October 23, 2024)
+
+- Updated: `postcss-selector-parser`
+- Updated: minimum node version is now 18.
+
 ### 5.0.0 (April 12, 2022)
 
 - Added: PostCSS 8 compatibility (breaking)

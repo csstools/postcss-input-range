@@ -2,7 +2,7 @@
 !.editorconfig
 !.gitignore
 !.github
-!.rollup.js
+!.rollup.mjs
 !.tape.js
 !.travis.yml
 *.log*
